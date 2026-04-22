@@ -1,0 +1,6 @@
+.env
+/env
+/src/__pycache__
+/src/config/__pycache__
+/src/service/usuario_service/__pycache__
+/src/controller/usuario_controller/__pycache__

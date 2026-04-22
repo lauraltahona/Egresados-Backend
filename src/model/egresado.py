@@ -1,6 +1,7 @@
 from enum import Enum
 from datetime import date
 from typing import Optional
+from pydantic import EmailStr, BaseModel, Field
 
 class Sexo(str, Enum):
     MASCULINO = "Masculino"
@@ -26,13 +27,13 @@ class SegundaLengua(str, Enum):
     CHINO_MANDARIN = "Chino Mandarin"
     OTRO = "Otro"
 
-class Egresado:
+class Egresado(BaseModel):
     nombre: str
     apellidos: str
-    cedula: str
+    cedula: str = Field(min_length=8, max_length=10)
     fechaNacimiento: date
-    correo: str
-    celular: str
+    correo: EmailStr
+    celular: str = Field(max_length=10)
     sexo: Sexo
     grupoEtnico: GrupoEtnico
     discapacidad: bool
@@ -40,6 +41,7 @@ class Egresado:
     dominioSegundaLengua: bool
     programaCursado: str
     paisResidencia: str
+    
     sexoOtro: Optional[str] = None
     segundaLengua: Optional[SegundaLengua] = None
     segundaLenguaOtro: Optional[str] = None
