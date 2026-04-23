@@ -12,11 +12,8 @@ app.add_middleware(
     allow_origins=["*"],      # Permite todos los orígenes
     allow_credentials=True,
     allow_methods=["*"],      # Permite todos los métodos (GET, POST, etc.)
-    allow_headers=["*"],      # Permite todos los headers
+    allow_headers=["*"],      # Permite todos los header
 )
-
-
-app = FastAPI()
 
 @app.get('/')
 def health():
