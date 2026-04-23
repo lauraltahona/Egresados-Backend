@@ -1,5 +1,5 @@
 from src.model.usuario import Usuario
-from src.service.usuario_service.usuario_crud        import crear_usuario
+from src.service.usuario_service.usuario_crud import crear_usuario
 from fastapi import APIRouter
 
 usuario_router = APIRouter()
