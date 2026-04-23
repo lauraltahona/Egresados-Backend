@@ -6,3 +6,10 @@ def crear_usuario(usuario: dict):
         return response.data
     except Exception as e:
         return {"error": str(e)}
+    
+def leer_usuarios():
+    try:
+        response = supabase.table("Usuarios").select("*").execute()
+        return response.data
+    except Exception as e:
+        return {"error": str(e)}
