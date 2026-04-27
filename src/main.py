@@ -5,8 +5,11 @@ from fastapi import FastAPI
 from src.middleware.cors import setup_cors
 
 app = FastAPI()
+
+# middleware
 setup_cors(app)
 
+# api
 @app.get('/')
 def health():
     return {"message": 'API is up!'}

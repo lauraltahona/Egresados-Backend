@@ -28,8 +28,8 @@ class SegundaLengua(str, Enum):
     OTRO = "Otro"
 
 class Egresado(BaseModel):
-    nombre: str
-    apellidos: str
+    nombre: str = Field(pattern=r"^[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+$") 
+    apellidos: str = Field(pattern=r"^[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+$") 
     cedula: str = Field(min_length=8, max_length=10)
     fechaNacimiento: date
     correo: EmailStr
