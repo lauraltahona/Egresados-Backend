@@ -20,7 +20,6 @@ class EstadoConvenio(str, Enum):
 
 class Beneficio(BaseModel):
     idBeneficio: int
-
     nombreBeneficio: str = Field(min_length=3, max_length=150, pattern=r"^[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+$")
     tipoBeneficio: TipoBeneficio
     tipoBeneficioOtro: str | None = Field(default=None,min_length=3,max_length=100,pattern=r"^[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+$")

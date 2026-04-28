@@ -1,6 +1,8 @@
 from fastapi import FastAPI
-from src.controller.usuario.usuario_controller import usuario_router
-from src.controller.rol.rol_controller import rol_router
+from src.controller.usuario_controller import usuario_router
+from src.controller.rol_controller import rol_router
+from src.controller.login_controller import login_router
+from src.controller.facultad_controller import facultad_router
 from fastapi import FastAPI
 from src.middleware.cors import setup_cors
 
@@ -16,3 +18,5 @@ def health():
 
 app.include_router(usuario_router)
 app.include_router(rol_router)
+app.include_router(login_router)
+app.include_router(facultad_router)
