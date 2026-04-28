@@ -1,11 +1,11 @@
-from src.model.respuesta_encuesta import respuestaEncuesta
-from src.service.respuesta_encuesta_service.respuesta_encuesta_crud import RespuestaEncuestaService
+from src.model.respuestaEncuesta import RespuestaEncuesta
+from src.service.respuestaEncuesta_crud import RespuestaEncuestaService
 from fastapi import APIRouter
 
-respuesta_encuesta_router = APIRouter()
+respuesta_encuesta_router = APIRouter(tags=["Respuesta Encuesta"])
 
 @respuesta_encuesta_router.post("/crear-respuesta-encuesta")
-def crear_respuesta_endpoint(respuesta: respuestaEncuesta):
+def crear_respuesta_endpoint(respuesta: RespuestaEncuesta):
     return RespuestaEncuestaService.crear_respuesta(respuesta.model_dump())
 
 @respuesta_encuesta_router.get("/respuestas-encuestas")
@@ -25,7 +25,7 @@ def leer_respuestas_por_egresado_endpoint(id_egresado: int):
     return RespuestaEncuestaService.leer_respuestas_por_egresado(id_egresado)
 
 @respuesta_encuesta_router.put("/actualizar-respuesta-encuesta/{id_respuesta}")
-def actualizar_respuesta_endpoint(id_respuesta: int, respuesta: respuestaEncuesta):
+def actualizar_respuesta_endpoint(id_respuesta: int, respuesta: RespuestaEncuesta):
     return RespuestaEncuestaService.actualizar_respuesta(id_respuesta, respuesta.model_dump())
 
 @respuesta_encuesta_router.delete("/eliminar-respuesta-encuesta/{id_respuesta}")
