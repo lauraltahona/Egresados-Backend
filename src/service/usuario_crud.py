@@ -6,7 +6,7 @@ class UsuarioService:
 
     async def crear_usuario(usuario: dict):
         try:
-            response = await supabase.table("Usuarios").insert(usuario).execute()
+            response = supabase.table("Usuarios").insert(usuario).execute()
             return response.data
         except Exception as e:
             return {"error": str(e)}

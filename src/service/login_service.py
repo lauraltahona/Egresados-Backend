@@ -31,16 +31,24 @@ class loginService:
     async def register(usuario: usuarioDto.UsuarioRegister):
         try:
             
-            auth_response = supabase.auth.sign_up({
+            existeUsuario = supabase.table("Usuarios")\
+                    .select("idUsuario")\
+                    .eq("correo", usuario.correo)\
+                    .execute()
+                
+            if existeUsuario.data:
+                return {"error": "El correo ya está registrado"}
+            
+            authResponse = supabase.auth.sign_up({
                 "email": usuario.correo,
                 "password": usuario.contrasena
             })
 
-            if not auth_response.user:
+            if not authResponse.user:
                 return {"error": "No se pudo crear el usuario"}
             
             usuarioRegister = {
-                "idUsuario": auth_response.user.id,
+                "idUsuario": authResponse.user.id,
                 "nombreUsuario": usuario.nombreUsuario,
                 "apellidoUsuario": usuario.apellidoUsuario,
                 "correo": usuario.correo,
@@ -53,7 +61,7 @@ class loginService:
 
             return {
                 "Mensaje": "Usuario registrado correctamente",
-                "id": auth_response.user.id,
+                "id": authResponse.user.id,
                 "email": usuario.correo
             }
 
