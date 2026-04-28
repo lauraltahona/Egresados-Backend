@@ -21,5 +21,5 @@ class Programa(BaseModel):
     nivelPrograma: NivelPrograma
     estadoPrograma: EstadoPrograma
     idFacultad: int
-    tituloOtorgado: str = Field(pattern=r"^[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+$") # ^ inicio de cadena, $ fin de cadena
+    tituloOtorgado: str = Field(pattern=r"^[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+$")
     
