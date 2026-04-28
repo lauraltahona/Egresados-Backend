@@ -1,7 +1,3 @@
-# ============================================
-# ARCHIVO NUEVO: Crear este archivo completo
-# Ruta: src/controller/encuesta/encuesta_controller.py
-# ============================================
 from src.model.encuesta import encuesta
 from src.service.encuesta_service.encuesta_crud import EncuestaService
 from fastapi import APIRouter

@@ -1,7 +1,3 @@
-# ============================================
-# ARCHIVO NUEVO: Crear este archivo completo
-# Ruta: src/service/encuesta_service/encuesta_crud.py
-# ============================================
 from src.config.supabase_client import supabase
 
 class EncuestaService:
