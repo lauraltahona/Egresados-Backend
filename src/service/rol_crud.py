@@ -1,5 +1,6 @@
 from src.config.supabase_client import supabase
 
+
 class RolService:
     def __init__(self):
         pass

@@ -1,33 +1,36 @@
-from src.model.respuesta_encuesta import respuestaEncuesta
-from src.service.respuesta_encuesta_service.respuesta_encuesta_crud import RespuestaEncuestaService
 from fastapi import APIRouter
+from src.model.respuestaEncuesta import RespuestaEncuesta
+from src.service.respuestaEncuesta_crud import RespuestaEncuestaService
 
-respuesta_encuesta_router = APIRouter()
+respuestaEncuesta_router = APIRouter(
+    prefix="/respuestas-encuesta",
+    tags=["Respuestas Encuesta"]
+)
 
-@respuesta_encuesta_router.post("/crear-respuesta-encuesta")
-def crear_respuesta_endpoint(respuesta: respuestaEncuesta):
+@respuestaEncuesta_router.post("/")
+def crear_respuesta_endpoint(respuesta: RespuestaEncuesta):
     return RespuestaEncuestaService.crear_respuesta(respuesta.model_dump())
 
-@respuesta_encuesta_router.get("/respuestas-encuestas")
+@respuestaEncuesta_router.get("/")
 def leer_respuestas_endpoint():
     return RespuestaEncuestaService.leer_respuestas()
 
-@respuesta_encuesta_router.get("/respuesta-encuesta/{id_respuesta}")
+@respuestaEncuesta_router.get("/{id_respuesta}")
 def leer_respuesta_endpoint(id_respuesta: int):
     return RespuestaEncuestaService.leer_respuesta_por_id(id_respuesta)
 
-@respuesta_encuesta_router.get("/respuestas-encuesta/{id_encuesta}")
+@respuestaEncuesta_router.get("/encuesta/{id_encuesta}")
 def leer_respuestas_por_encuesta_endpoint(id_encuesta: int):
     return RespuestaEncuestaService.leer_respuestas_por_encuesta(id_encuesta)
 
-@respuesta_encuesta_router.get("/respuestas-egresado/{id_egresado}")
+@respuestaEncuesta_router.get("/egresado/{id_egresado}")
 def leer_respuestas_por_egresado_endpoint(id_egresado: int):
     return RespuestaEncuestaService.leer_respuestas_por_egresado(id_egresado)
 
-@respuesta_encuesta_router.put("/actualizar-respuesta-encuesta/{id_respuesta}")
-def actualizar_respuesta_endpoint(id_respuesta: int, respuesta: respuestaEncuesta):
+@respuestaEncuesta_router.put("/{id_respuesta}")
+def actualizar_respuesta_endpoint(id_respuesta: int, respuesta: RespuestaEncuesta):
     return RespuestaEncuestaService.actualizar_respuesta(id_respuesta, respuesta.model_dump())
 
-@respuesta_encuesta_router.delete("/eliminar-respuesta-encuesta/{id_respuesta}")
+@respuestaEncuesta_router.delete("/{id_respuesta}")
 def eliminar_respuesta_endpoint(id_respuesta: int):
     return RespuestaEncuestaService.eliminar_respuesta(id_respuesta)
