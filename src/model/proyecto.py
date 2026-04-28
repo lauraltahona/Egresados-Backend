@@ -7,4 +7,3 @@ class Proyecto(BaseModel):
     estadoProyecto: str # mmm para q quiero saber el estado en esta aplicacion? no me lo van a revisar
     descripcionProyecto: str = Field(min_length=10, max_length=500, pattern=r"^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$")
     idEgresado: int
-
