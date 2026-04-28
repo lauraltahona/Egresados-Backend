@@ -2,27 +2,27 @@ import datetime
 from src.config.supabase_client import supabase
 import src.modelDto.usuario_dto as usuarioDto
 
-class login:
+class loginService:
     def __init__(self):
         pass
     
     async def Login(usuario: usuarioDto.UsuarioLogin):
         try:
-            response = await supabase.auth.sign_in_with_password({
+            response = supabase.auth.sign_in_with_password({
                 "email": usuario.correo,
                 "password": usuario.contrasena
             })
             
-            usuarioLogin = await supabase.table("Usuarios")\
-            .select("idusuario, nombreUsuario, apellidoUsuario, correo, celular, idRol, fechaRegistoUsuario")\
-            .eq("id", response.user.id)\
+            usuarioLogin = supabase.table("Usuarios")\
+            .select("idUsuario, nombreUsuario, apellidoUsuario, correo, celular, idRol, fechaRegistoUsuario")\
+            .eq("idUsuario", response.user.id)\
             .single()\
             .execute()
 
             return {
                 "token": response.session.access_token,
                 "refresh_token": response.session.refresh_token,
-                "user": usuarioLogin.data
+                "usuario": usuarioLogin.data
             }
             
         except Exception as e:
@@ -49,7 +49,7 @@ class login:
                 "fechaRegistoUsuario": datetime.datetime.now().isoformat()
             }
 
-            await supabase.table("Usuarios").insert(usuarioRegister).execute()
+            supabase.table("Usuarios").insert(usuarioRegister).execute()
 
             return {
                 "Mensaje": "Usuario registrado correctamente",
