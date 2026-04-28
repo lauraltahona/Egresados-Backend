@@ -14,7 +14,7 @@ class loginService:
             })
             
             usuarioLogin = supabase.table("Usuarios")\
-            .select("idUsuario, nombreUsuario, apellidoUsuario, correo, celular, idRol, fechaRegistoUsuario")\
+            .select("idUsuario, nombreUsuario, apellidoUsuario, correo, celular, idRol")\
             .eq("idUsuario", response.user.id)\
             .single()\
             .execute()

@@ -1,7 +1,5 @@
-from enum import Enum
 from pydantic import Field, EmailStr, BaseModel
 
-class Facultad(BaseModel):
-    idFacultad: int
+class FacultadDto(BaseModel):
     nombreFacultad: str = Field(min_length=3, max_length=100, pattern=r"^[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]+$")
-    correoFacultad: EmailStr # validar que sea unicesar.edu.co ! 
+    correoFacultad: EmailStr
