@@ -1,8 +1,8 @@
 from src.model.rol import rol
-from src.service.rol_service.rol_crud import RolService
+from src.service.rol_crud import RolService
 from fastapi import APIRouter
 
-rol_router = APIRouter()
+rol_router = APIRouter(tags=["Rol"])
 
 @rol_router.post("/crear-rol")
 def crear_rol_endpoint(rol: rol):
