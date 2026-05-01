@@ -32,8 +32,8 @@ class SituacionLaboralDto(BaseModel):
     
     @model_validator(mode="after")
     def validar_salario(self):
-        if self.salarioActual:
-            if not self.estaEmpleado:
+        if self.estaEmpleado:
+            if not self.salarioActual:
                 raise ValueError("Obligatorio poner salario si está empleado")
-            
+        return self
     
