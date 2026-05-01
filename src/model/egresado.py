@@ -27,9 +27,26 @@ class SegundaLengua(str, Enum):
     CHINO_MANDARIN = "Chino Mandarin"
     OTRO = "Otro"
 
+class TipoDocumento(str, Enum):
+    CEDULA_CIUDADANIA = "Cédula de ciudadanía"
+    TARJETA_IDENTIDAD = "Tarjeta de identidad"
+    PASAPORTE = "Pasaporte"
+    CEDULA_EXTRANJERIA = "Cédula de extranjería"
+
+class NivelFormacion(str, Enum):
+    PREGRADO = "Pregrado"
+    POSGRADO = "Posgrado"
+    ESPECIALIZACION = "Especialización"
+    MAESTRIA = "Maestría"
+    DOCTORADO = "Doctorado"
+    POSDOCTORADO = "Pos-Doctorado"
+
+
 class Egresado(BaseModel):
-    nombre: str = Field(pattern=r"^[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+$") 
-    apellidos: str = Field(pattern=r"^[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+$") 
+    idEgresado: int
+    nombre: str = Field(pattern=r"^[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+$", min_length=3, max_length=100) 
+    apellidos: str = Field(pattern=r"^[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+$", min_length=3, max_length=100),
+    tipoDocumento: TipoDocumento
     cedula: str = Field(min_length=8, max_length=10)
     fechaNacimiento: date
     correo: EmailStr

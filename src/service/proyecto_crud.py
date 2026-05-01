@@ -1,3 +1,4 @@
+from src.modelDto.proyecto_dto import ProyectoDto
 from src.config.supabase_client import supabase
 
 class ProyectoService:
@@ -5,16 +6,16 @@ class ProyectoService:
     def __init__(self):
         pass
 
-    async def crear_proyecto(proyecto: dict):
+    async def crear_proyecto(proyecto: ProyectoDto):
         try: 
 
             existeProyecto = supabase.table("Proyectos")\
                 .select("idProyecto")\
-                .eq(proyecto.tituloProyecto)
+                .eq("tituloProyecto", proyecto.tituloProyecto).execute()
             
             if existeProyecto.data: return {"error": "El titulo ya está registrado"}
 
-            response = supabase.table("Proyectos").insert(proyecto).execute() # convertir a JSON
+            response = supabase.table("Proyectos").insert(proyecto.model_dump(mode='json')).execute() 
 
             return { "mensaje": "Proyecto registrado correctamente" }
         

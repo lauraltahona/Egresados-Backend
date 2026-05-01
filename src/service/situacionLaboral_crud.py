@@ -1,40 +1,32 @@
+from fastapi import HTTPException
+
+from src.modelDto.situacionLaboral_dto import SituacionLaboralDto
 from src.config.supabase_client import supabase
 
-class SituacionLaboral_Service:
-    def __init__(self):
-        pass
+class SituacionLaboralService:
 
-    def crear_situacion_laboral(situacion: dict):
+    async def crear_situacion_laboral(situacion: SituacionLaboralDto):
         try:
+            print(situacion)
+            print(supabase)
             existeEgresado = supabase.table("Egresados")\
-                .select("idEgresado, nombre, apellidos")\
+                .select("idEgresado, nombreEgresado, apellidosEgresado")\
                 .eq("idEgresado", situacion.idEgresado).execute()
             
-            if not existeEgresado.data: return {"error": "el egresado no existe"}
+            if not existeEgresado.data: raise HTTPException(status_code=404, detail="El egresado no existe")
 
-            situacionJSON = {
-                "estaEmpleado": situacion.estaEmpleado,
-                "empresaActual": situacion.empresaActual,
-                "cargoActual": situacion.cargoActual,
-                "sectorEmpresa": situacion.sectorEmpresa,
-                "sectorEmpresaOtro": situacion.sectorEmpresaOtro,
-                "tipoContrato": situacion.tipoContrato,
-                "salarioActual": situacion.salarioActual,
-                "fechaIngreso": situacion.fechaIngreso,
-                "idEgresado": situacion.idEgresado
-            }
+            response = supabase.table("situacionLaboral")\
+                .insert(situacion.model_dump(mode='json')).execute()
             
-            response = supabase.table("Egresados")\
-                .insert(situacionJSON).execute()
-            
-            return {"message": "Situación laboral creada exitosamente", "data": response.data}
+            return {"message": "Situación laboral creada exitosamente"}
             
         except Exception as e:
             return {"error": str(e)}
+        
 
-    def obtener_situacion_laboral_por_egresado(idEgresado: int):
+    async def obtener_situacion_laboral_por_egresado(idEgresado: int):
         try:
-            response = supabase.table("SituacionLaboral")\
+            response = supabase.table("SituacionesLaborales")\
                 .select("*")\
                 .eq("idEgresado", idEgresado).execute()
             if not response.data:
@@ -43,10 +35,10 @@ class SituacionLaboral_Service:
         
         except Exception as e:
             return {"error": str(e)}
-        
-    def actualizar_situacion_laboral(idSituacion: int, situacion: dict):
+
+    async def actualizar_situacion_laboral(idSituacion: int, situacion: dict):
         try:
-            response = supabase.table("SituacionLaboral")\
+            response = supabase.table("SituacionesLaborales")\
                 .update(situacion.dict())\
                 .eq("idSituacion", idSituacion).execute()
             
