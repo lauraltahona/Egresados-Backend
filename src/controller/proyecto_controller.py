@@ -8,7 +8,7 @@ proyecto_router = APIRouter(tags=["Proyecto"])
 
 @proyecto_router.post("/crear-proyecto")
 async def crear_proyecto_endpoint(proyecto: ProyectoDto):
-    return await ProyectoService.crear_proyecto(proyecto.model_dump())
+    return await ProyectoService.crear_proyecto(proyecto)
 
 @proyecto_router.get("/proyectos")
 async def obtener_proyectos_endpoint():
