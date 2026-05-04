@@ -10,6 +10,8 @@ from src.controller.respuestaEncuesta_controller import respuesta_encuesta_route
 from src.controller.proyecto_controller import proyecto_router
 from src.controller.situacionLaboral_controller import situacion_router
 from src.controller.egresado_controller import egresado_router
+from src.controller.ofertaLaboral_controller import oferta_router
+
 from fastapi import FastAPI
 from src.middleware.cors import setup_cors
 
@@ -28,10 +30,13 @@ app.include_router(rol_router)
 app.include_router(login_router)
 app.include_router(facultad_router)
 app.include_router(proyecto_router)
+app.include_router(situacion_router)
 app.include_router(beneficio_router)
+app.include_router(egresado_router)
+app.include_router(oferta_router)
 app.include_router(encuesta_router)
 app.include_router(pregunta_encuesta_router)
-app.include_router(situacion_router)
 app.include_router(respuesta_encuesta_router)
-app.include_router(egresado_router)
+
+
 
