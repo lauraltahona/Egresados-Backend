@@ -1,7 +1,7 @@
 from enum import Enum
 from datetime import date
 from decimal import Decimal
-from pydantic import BaseModel, Field, EmailStr, validator
+from pydantic import BaseModel, Field, EmailStr
 
 
 class ModalidadOferta(str, Enum):
@@ -252,8 +252,3 @@ class OfertaLaboral(BaseModel):
     nivelEstudios: NivelEstudios
     correoContacto: EmailStr = Field(min_length=6, max_length=150)
 
-    @validator('fechaPublicacion')
-    def validar_fecha_publicacion(cls, v):
-        if v > date.today():
-            raise ValueError('La fecha de publicación no puede ser futura')
-        return v
