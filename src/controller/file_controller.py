@@ -10,3 +10,11 @@ async def subir_imagen_endpoint(imagen: UploadFile = File(...)):
         return {"imagenUrl": url}
     except Exception as e:
         return {"error": str(e)}
+
+@file_router.post("/upload-file")
+async def subir_archivo_endpoint(archivo: UploadFile = File(...)):
+    try:
+        url = await FileService.subir_archivo(archivo, carpeta="proyectos")
+        return {"archivoUrl": url}
+    except Exception as e:
+        return {"error": str(e)}
