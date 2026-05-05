@@ -13,3 +13,7 @@ async def crear_proyecto_endpoint(proyecto: ProyectoDto):
 @proyecto_router.get("/proyectos")
 async def obtener_proyectos_endpoint():
     return await ProyectoService.obtener_proyectos()
+
+@proyecto_router.get("/proyectos/{titulo}")
+async def obtener_proyecto_por_titulo_endpoint(titulo: str):
+    return await ProyectoService.obtener_proyecto_por_titulo(titulo)

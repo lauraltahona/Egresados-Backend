@@ -28,3 +28,13 @@ class ProyectoService:
             return response.data
         except Exception as e:
             return {"error": str(e)}
+        
+    async def obtener_proyecto_por_titulo(titulo: str):
+        try: 
+            response = supabase.table("Proyectos").select("*").eq("tituloProyecto", titulo).execute()
+            if not response.data:
+                return {"error": "Proyecto no encontrado"}
+            return response.data[0]
+        
+        except Exception as e:
+            return {"error": str(e)}
