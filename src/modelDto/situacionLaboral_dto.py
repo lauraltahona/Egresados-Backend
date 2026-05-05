@@ -1,17 +1,16 @@
 from pydantic import BaseModel, Field, model_validator
-from src.model.situacionLaboral import SectorEmpresa, TipoContrato
-from enum import Enum
 from datetime import date
 from decimal import Decimal
+import src.enum.situacionLaboral_enum as Enum
 
 
 class SituacionLaboralDto(BaseModel):
     estaEmpleado: bool
     empresaActual: str | None = Field(default=None, min_length=3, max_length=150,pattern=r"^[0-9A-Za-zñÑáéíóúÁÉÍÓÚ\s\.]+$")
     cargoActual: str | None = Field(default=None,min_length=3,max_length=150,pattern=r"^[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+$")
-    sectorEmpresa: SectorEmpresa | None = None
+    sectorEmpresa: Enum.SectorEmpresa | None = None
     sectorEmpresaOtro: str | None = Field(default=None,min_length=3,max_length=100,pattern=r"^[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+$")
-    tipoContrato: TipoContrato | None = None
+    tipoContrato: Enum.TipoContrato | None = None
     salarioActual: Decimal | None = Field(default=None, gt=0)
     fechaIngreso: date | None = None
     idEgresado: int | None = Field(default=None, gt=0)
