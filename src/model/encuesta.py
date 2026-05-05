@@ -1,19 +1,6 @@
-from enum import Enum
 from datetime import date
 from pydantic import BaseModel, Field
-
-
-class EstadoEncuesta(str, Enum):
-    ACTIVA = "Activa"
-    CERRADA = "Cerrada"
-    BORRADOR = "Borrador"
-
-
-class TipoEncuesta(str, Enum):
-    ESTANDAR = "Estándar"
-    PERSONALIZADA = "Personalizada"
-    MIXTA = "Mixta"
-
+import src.enum.encuesta_enum as Enum
 
 class Encuesta(BaseModel):
     idEncuesta: int
@@ -21,8 +8,8 @@ class Encuesta(BaseModel):
     descripcionEncuesta: str = Field(min_length=10, max_length=500, pattern=r"^[A-Za-zñÑáéíóúÁÉÍÓÚ0-9\s,.!?¿¡:;()\-]+$")
     fechaInicioEncuesta: date
     fechaVencimientoEncuesta: date
-    estadoEncuesta: EstadoEncuesta
-    tipoEncuesta: TipoEncuesta
+    estadoEncuesta: Enum.EstadoEncuesta
+    tipoEncuesta: Enum.TipoEncuesta
     
     @classmethod
     def validar_fechas(cls, values):

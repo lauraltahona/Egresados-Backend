@@ -3,6 +3,7 @@ from src.controller.usuario_controller import usuario_router
 from src.controller.rol_controller import rol_router
 from src.controller.login_controller import login_router
 from src.controller.facultad_controller import facultad_router
+from src.controller.programa_controller import programa_router
 from src.controller.beneficio_controller import beneficio_router
 from src.controller.encuesta_controller import encuesta_router
 from src.controller.preguntaEncuesta_controller import pregunta_encuesta_router
@@ -29,6 +30,7 @@ app.include_router(usuario_router)
 app.include_router(rol_router)
 app.include_router(login_router)
 app.include_router(facultad_router)
+app.include_router(programa_router)
 app.include_router(proyecto_router)
 app.include_router(situacion_router)
 app.include_router(beneficio_router)
