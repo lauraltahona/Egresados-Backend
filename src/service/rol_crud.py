@@ -17,6 +17,13 @@ class RolService:
             return response.data
         except Exception as e:
             return {"error": str(e)}
+        
+    def leer_role_por_id(id_rol: int):
+        try:
+            response = supabase.table("Roles").select("nombreRol").eq("idRol", id_rol).execute()
+            return response.data
+        except Exception as e:
+            return {"error": str(e)}
 
     def actualizar_rol(id_rol: int, rol: dict):
         try:
