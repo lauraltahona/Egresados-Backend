@@ -1,5 +1,7 @@
 from src.config.supabase_client import supabase
 
+#hola, este es el servicio de respuestas de encuestas, aquí se encuentran las funciones para crear, leer, actualizar y eliminar respuestas de encuestas en la base de datos de Supabase. Cada función maneja las operaciones correspondientes y devuelve los resultados o errores en caso de que ocurran.
+
 class RespuestaEncuestaService:
     def __init__(self):
         pass
