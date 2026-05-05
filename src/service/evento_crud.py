@@ -31,7 +31,7 @@ class EventoService:
         except Exception as e:
             return {"error": str(e)}
         
-    async def leer_eventos():
+    def leer_eventos():
         try:
             response = supabase.table("Eventos").select("*").order("fechaEvento", desc=False).execute()
             return response.data
@@ -44,7 +44,7 @@ class EventoService:
                 .order("fechaEvento", desc=False)\
                 .execute()
             
-            return response.data if response.data else []
+            return response.data
             
         except Exception as e:
             return {"error": str(e)}
