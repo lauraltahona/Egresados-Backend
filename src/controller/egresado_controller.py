@@ -5,9 +5,16 @@ from fastapi import APIRouter
 egresado_router = APIRouter(tags=["Egresados"])
 
 @egresado_router.post("/egresados")
-def crear_egresado(egresado: EgresadoDto):
-    try:
-        response = EgresadoService.crear_egresado(egresado)
-        return response
-    except Exception as e:
-        return {"Error al crear el egresado": str(e)}
+async def crear_egresado(egresado: EgresadoDto):
+    response = await EgresadoService.crear_egresado(egresado)
+    return response
+
+@egresado_router.get("/egresados")  
+async def get_egresados():
+    response = await EgresadoService.get_egresados()
+    return response
+
+@egresado_router.get("/egresados/{idEgresado}")
+async def get_egresado_by_id(idEgresado: int):
+    response = await EgresadoService.get_egresado_by_id(idEgresado)
+    return response 
