@@ -5,7 +5,6 @@ class Programa(BaseModel):
 
     idPrograma: int
     nombrePrograma: str
-    programaCursadoOtro: str
     nivelPrograma: Enum.NivelPrograma
     estadoPrograma: Enum.EstadoPrograma
     idFacultad: int
