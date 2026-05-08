@@ -1,4 +1,5 @@
 import datetime
+from http.client import HTTPException
 from src.config.supabase_client import supabase
 import src.modelDto.usuario_dto as usuarioDto
 
@@ -37,7 +38,7 @@ class loginService:
                     .execute()
                 
             if existeUsuario.data:
-                return {"error": "El correo ya está registrado"}
+                raise HTTPException(status_code=400, detail="El correo ya está registrado")
             
             authResponse = supabase.auth.sign_up({
                 "email": usuario.correo,
