@@ -7,6 +7,7 @@ from src.enum.egresado_enum import GrupoEtnico
 from src.modelDto.egresado_dto import EgresadoDto, EgresadoUpdateDto
 from src.service.login_service import loginService
 from src.config.supabase_client import supabase
+from src.repository.reporte_repository import limpiar_cache
 
 class EgresadoService:
 
@@ -33,8 +34,8 @@ class EgresadoService:
             }
 
             response_usuario = await loginService.register(usuarioRegister)
-            print(response_usuario)
 
+            limpiar_cache()
             return {"message": "Egresado creado exitosamente", "data": response.data}
         
         except Exception as e:
@@ -99,6 +100,8 @@ class EgresadoService:
             response = supabase.table("Egresados")\
                 .update(datos_actualizar)\
                 .eq("idEgresado", idEgresado).execute()
+            
+            limpiar_cache()
 
             return {"message": "Egresado actualizado correctamente",
                     "data": response.data}
