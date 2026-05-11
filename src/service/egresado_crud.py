@@ -1,7 +1,9 @@
 import datetime
+from typing import Optional
 
 from fastapi import HTTPException
 
+from src.enum.egresado_enum import GrupoEtnico
 from src.modelDto.egresado_dto import EgresadoDto, EgresadoUpdateDto
 from src.service.login_service import loginService
 from src.config.supabase_client import supabase
@@ -39,10 +41,33 @@ class EgresadoService:
             return {"message": "Error al crear el egresado", "error": str(e)}
             
 
-    async def get_egresados():
+    async def get_egresados(
+    idPrograma: Optional[int] = None,
+    sexo: Optional[str] = None,
+    paisResidencia: Optional[str] = None,
+    ciudadResidencia: Optional[str] = None,
+    grupoEtnico: Optional[GrupoEtnico] = None,
+    discapacidad: Optional[bool] = None):
         try:
-            response = supabase.table('Egresados').select('*').execute()
-            return response.data
+            query = supabase.table('Egresados').select("idEgresado, nombreEgresado, " \
+            "apellidosEgresado, sexo, grupoEtnico, paisResidencia, ciudadResidencia, idPrograma")
+
+            if idPrograma is not None:
+                query = query.eq("idPrograma", idPrograma)
+            if sexo is not None:
+                query = query.eq("sexo", sexo)
+            if paisResidencia is not None:
+                query = query.eq("paisResidencia", paisResidencia)
+            if ciudadResidencia is not None:
+                query = query.eq("ciudadResidencia", ciudadResidencia)
+            if grupoEtnico is not None:
+                query = query.eq("grupoEtnico", grupoEtnico.value)
+            if discapacidad is not None:
+                query = query.eq("discapacidad", discapacidad)
+
+            response = query.execute()
+
+            return {"data": response.data}
         except Exception as e:
             return {"message": "Error al obtener los egresados", "error": str(e)}
     

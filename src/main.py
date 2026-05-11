@@ -15,6 +15,7 @@ from src.controller.ofertaLaboral_controller import oferta_router
 from src.controller.evento_controller import evento_router
 from src.controller.file_controller import file_router
 from src.controller.inscripcionEvento_controller import inscripcion_router
+from src.controller.reporte_controller import reporte_router
 from fastapi import FastAPI
 from src.middleware.cors import setup_cors
 
@@ -30,17 +31,18 @@ def health():
 
 app.include_router(usuario_router)
 app.include_router(rol_router)
+app.include_router(egresado_router)
 app.include_router(login_router)
 app.include_router(facultad_router)
 app.include_router(programa_router)
 app.include_router(proyecto_router)
+app.include_router(file_router)
 app.include_router(situacion_router)
 app.include_router(beneficio_router)
-app.include_router(egresado_router)
 app.include_router(oferta_router)
-app.include_router(file_router)
+app.include_router(evento_router)
+app.include_router(inscripcion_router)
+app.include_router(reporte_router)
 app.include_router(encuesta_router)
 app.include_router(pregunta_encuesta_router)
 app.include_router(respuesta_encuesta_router)
-app.include_router(evento_router)
-app.include_router(inscripcion_router)

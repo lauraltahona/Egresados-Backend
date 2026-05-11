@@ -26,7 +26,7 @@ class SituacionLaboralService:
 
     async def obtener_situacion_laboral_por_egresado(idEgresado: int):
         try:
-            response = supabase.table("SituacionesLaborales")\
+            response = supabase.table("situacionLaboral")\
                 .select("*")\
                 .eq("idEgresado", idEgresado).execute()
             if not response.data:
@@ -38,7 +38,7 @@ class SituacionLaboralService:
 
     async def actualizar_situacion_laboral(idSituacion: int, situacion: dict):
         try:
-            response = supabase.table("SituacionesLaborales")\
+            response = supabase.table("situacionLaboral")\
                 .update(situacion.dict())\
                 .eq("idSituacion", idSituacion).execute()
             
