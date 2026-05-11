@@ -1,6 +1,8 @@
 from fastapi import HTTPException
 
 from src.modelDto.situacionLaboral_dto import SituacionLaboralDto
+from src.repository.reporte_repository import limpiar_cache
+
 from src.config.supabase_client import supabase
 
 class SituacionLaboralService:
@@ -17,6 +19,8 @@ class SituacionLaboralService:
 
             response = supabase.table("situacionLaboral")\
                 .insert(situacion.model_dump(mode='json')).execute()
+            
+            limpiar_cache()
             
             return {"message": "Situación laboral creada exitosamente"}
             
@@ -44,6 +48,8 @@ class SituacionLaboralService:
             
             if response.status_code != 200:
                 return {"error": "No se pudo actualizar la situación laboral"}
+            
+            limpiar_cache()
             
             return {"message": "Situación laboral actualizada exitosamente", "data": response.data}
         
