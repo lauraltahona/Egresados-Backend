@@ -19,6 +19,7 @@ class UsuarioService:
                 "idUsuario", 
                 "nombreUsuario", 
                 "apellidoUsuario", 
+                "correo",
                 "celular", 
                 "idRol", 
                 "fechaRegistoUsuario",
