@@ -13,14 +13,23 @@ class ExcelEgresadoService:
 
     async def exportar_egresados() -> StreamingResponse:
         try:
-            response = supabase.table("Egresados").select("nombreEgresado", "apellidosEgresado", "tipoDocumento", "numeroDocumento",
-            "fechaNacimiento", "correoEgresado", "telefono", "sexo", "grupoEtnico",
-            "discapacidad", "carnet", "dominioSegundaLengua", "segundaLengua",
-            "idPrograma", "paisResidencia", "ciudadResidencia", "departamentoResidencia",
-            "direccion", "estratoSocioeconomico", "nivelFormacionProfesional",
-            "produccionIntelectual", "nombreProduccionIntelectual", "experiencia",
-            "sexoOtro", "segundaLenguaOtro").execute()
-            return exportar_excel(response.data, nombre_hoja="Egresados")
+            response = supabase.table("Egresados").select(
+                "nombreEgresado, apellidosEgresado, tipoDocumento, numeroDocumento, "
+                "fechaNacimiento, correoEgresado, telefono, sexo, grupoEtnico, "
+                "discapacidad, carnet, dominioSegundaLengua, segundaLengua, "
+                "Programas(nombrePrograma), paisResidencia, ciudadResidencia, departamentoResidencia, "
+                "direccion, estratoSocioeconomico, nivelFormacionProfesional, "
+                "produccionIntelectual, nombreProduccionIntelectual, experiencia, "
+                "sexoOtro, segundaLenguaOtro"
+            ).execute()
+
+            datos = []
+            for egresado in response.data:
+                egresado["nombrePrograma"] = egresado.pop("Programas", {}).get("nombrePrograma")
+                datos.append(egresado)
+
+            return exportar_excel(datos, nombre_hoja="Egresados")
+
         except HTTPException:
             raise
         except Exception as e:
@@ -58,6 +67,18 @@ class ExcelEgresadoService:
 
                     if datos.get("fechaNacimiento") is not None:
                         datos["fechaNacimiento"] = str(datos["fechaNacimiento"]).strip()[:10]
+                        
+                    if datos.get("nombrePrograma") is not None:
+                        programa = supabase.table("Programas") \
+                            .select("idPrograma") \
+                            .eq("nombrePrograma", datos.pop("nombrePrograma")) \
+                            .single() \
+                            .execute()
+                        
+                        if not programa.data:
+                            raise ValueError(f"No existe un programa con el nombre '{datos.get('nombrePrograma')}'")
+                        
+                        datos["idPrograma"] = programa.data["idPrograma"]
 
                     egresado_dto = EgresadoDto(**datos)
                     resultado = await EgresadoService.crear_egresado(egresado_dto)
@@ -85,7 +106,7 @@ class ExcelEgresadoService:
             "nombreEgresado", "apellidosEgresado", "tipoDocumento", "numeroDocumento",
             "fechaNacimiento", "correoEgresado", "telefono", "sexo", "grupoEtnico",
             "discapacidad", "carnet", "dominioSegundaLengua", "segundaLengua",
-            "idPrograma", "paisResidencia", "ciudadResidencia", "departamentoResidencia",
+            "nombrePrograma", "paisResidencia", "ciudadResidencia", "departamentoResidencia",
             "direccion", "estratoSocioeconomico", "nivelFormacionProfesional",
             "produccionIntelectual", "nombreProduccionIntelectual", "experiencia",
             "sexoOtro", "segundaLenguaOtro"
