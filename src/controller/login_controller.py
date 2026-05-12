@@ -1,4 +1,4 @@
-from src.modelDto.usuario_dto import UsuarioLogin, UsuarioRegister
+from src.modelDto.usuario_dto import UsuarioLogin, UsuarioRegister, CambiarContrasenaDto
 from src.service.login_service import loginService
 from fastapi import APIRouter
 
@@ -11,3 +11,14 @@ async def login_endpoint(usuario: UsuarioLogin):
 @login_router.post("/register")
 async def login_endpoint(usuario: UsuarioRegister):
     return await loginService.register(usuario)
+
+@login_router.patch("/cambiar-contrasena")
+async def cambiar_contrasena_endpoint(usuario: CambiarContrasenaDto):
+    if not usuario.contrasenas_coinciden():
+        return {"error": "La nueva contraseña y la confirmación no coinciden"}
+ 
+    return await loginService.cambiar_contrasena(
+        usuario.usuarioId,
+        usuario.contrasenaActual,
+        usuario.nuevaContrasena
+    )

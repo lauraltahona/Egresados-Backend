@@ -1,4 +1,4 @@
-import datetime
+from datetime import date
 from typing import Optional
 
 from fastapi import HTTPException
@@ -23,15 +23,24 @@ class EgresadoService:
                 raise HTTPException(status_code=404, detail="El egresado ya existe")
 
             response = supabase.table('Egresados').insert(egresado.model_dump(mode='json')).execute()
+            
+            rolEgresado = supabase.table("Roles") \
+                .select("idRol") \
+                .eq("nombreRol", "Egresado") \
+                .single() \
+                .execute()
+ 
+            if not rolEgresado.data:
+                raise HTTPException(status_code=500, detail="No se encontró el rol 'Egresado' en la base de datos")
 
             usuarioRegister = UsuarioRegister(
                 nombreUsuario=egresado.nombreEgresado,
                 apellidoUsuario=egresado.apellidosEgresado,
-                idRol=2,
+                idRol=rolEgresado.data["idRol"],
                 correo=egresado.correoEgresado,
                 contrasena=egresado.numeroDocumento,
                 celular=egresado.telefono,
-                fechaRegistoUsuario=datetime.datetime.now().isoformat()
+                fechaRegistoUsuario=date.today().isoformat()
             )
 
             response_usuario = await loginService.register(usuarioRegister)
