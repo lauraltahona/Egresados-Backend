@@ -5,6 +5,7 @@ from fastapi import HTTPException
 
 from src.enum.egresado_enum import GrupoEtnico
 from src.modelDto.egresado_dto import EgresadoDto, EgresadoUpdateDto
+from src.modelDto.usuario_dto import UsuarioRegister
 from src.service.login_service import loginService
 from src.config.supabase_client import supabase
 from src.repository.reporte_repository import limpiar_cache
@@ -23,15 +24,15 @@ class EgresadoService:
 
             response = supabase.table('Egresados').insert(egresado.model_dump(mode='json')).execute()
 
-            usuarioRegister = {
-                "nombreUsuario": egresado.nombreEgresado,
-                "apellidoUsuario": egresado.apellidosEgresado,
-                "idRol": 2,
-                "correo": egresado.correoEgresado,
-                "contrasena": egresado.numeroDocumento,
-                "celular": egresado.telefono,
-                "fechaRegistoUsuario": datetime.datetime.now().isoformat()
-            }
+            usuarioRegister = UsuarioRegister(
+                nombreUsuario=egresado.nombreEgresado,
+                apellidoUsuario=egresado.apellidosEgresado,
+                idRol=2,
+                correo=egresado.correoEgresado,
+                contrasena=egresado.numeroDocumento,
+                celular=egresado.telefono,
+                fechaRegistoUsuario=datetime.datetime.now().isoformat()
+            )
 
             response_usuario = await loginService.register(usuarioRegister)
 
