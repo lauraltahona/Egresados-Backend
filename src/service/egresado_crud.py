@@ -1,10 +1,11 @@
-import datetime
+from datetime import date
 from typing import Optional
 
 from fastapi import HTTPException
 
 from src.enum.egresado_enum import GrupoEtnico
 from src.modelDto.egresado_dto import EgresadoDto, EgresadoUpdateDto
+from src.modelDto.usuario_dto import UsuarioRegister
 from src.service.login_service import loginService
 from src.config.supabase_client import supabase
 from src.repository.reporte_repository import limpiar_cache
@@ -22,16 +23,25 @@ class EgresadoService:
                 raise HTTPException(status_code=404, detail="El egresado ya existe")
 
             response = supabase.table('Egresados').insert(egresado.model_dump(mode='json')).execute()
+            
+            rolEgresado = supabase.table("Roles") \
+                .select("idRol") \
+                .eq("nombreRol", "Egresado") \
+                .single() \
+                .execute()
+ 
+            if not rolEgresado.data:
+                raise HTTPException(status_code=500, detail="No se encontró el rol 'Egresado' en la base de datos")
 
-            usuarioRegister = {
-                "nombreUsuario": egresado.nombreEgresado,
-                "apellidoUsuario": egresado.apellidosEgresado,
-                "idRol": 2,
-                "correo": egresado.correoEgresado,
-                "contrasena": egresado.numeroDocumento,
-                "celular": egresado.telefono,
-                "fechaRegistoUsuario": datetime.datetime.now().isoformat()
-            }
+            usuarioRegister = UsuarioRegister(
+                nombreUsuario=egresado.nombreEgresado,
+                apellidoUsuario=egresado.apellidosEgresado,
+                idRol=rolEgresado.data["idRol"],
+                correo=egresado.correoEgresado,
+                contrasena=egresado.numeroDocumento,
+                celular=egresado.telefono,
+                fechaRegistoUsuario=date.today().isoformat()
+            )
 
             response_usuario = await loginService.register(usuarioRegister)
 

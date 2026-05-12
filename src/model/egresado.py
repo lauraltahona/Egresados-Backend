@@ -19,6 +19,14 @@ class Egresado(BaseModel):
     dominioSegundaLengua: bool
     programaCursado: str
     paisResidencia: str
+    ciudadResidencia: str =  Field(pattern=r"^[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+$", min_length=2, max_length=100)
+    departamentoResidencia: str = Field(pattern=r"^[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+$", min_length=2, max_length=100)
+    direccion: str = Field(min_length=10, max_length=150)
+    estratoSocioeconomico: int = Field(ge=1, le=6)
+    nivelFormacionProfesional: Enum.NivelFormacion
+    produccionIntelectual: bool
+    nombreProduccionIntelectual: str = Field(pattern=r"^[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+$", min_length=2, max_length=150)
+    experiencia: int = Field(ge=0, le=70)
     
     sexoOtro: Optional[str] = None
     segundaLengua: Optional[Enum.SegundaLengua] = None

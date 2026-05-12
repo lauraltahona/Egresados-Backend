@@ -13,3 +13,12 @@ class UsuarioRegister(BaseModel):
     contrasena: str = Field(min_length=8)
     celular: str = Field(min_length=10, max_length=10, pattern=r"^\d{10}$")
     fechaRegistoUsuario: date = Field(default_factory=date.today)
+    
+class CambiarContrasenaDto(BaseModel):
+    usuarioId: str = Field(min_length=1)
+    contrasenaActual: str = Field(min_length=6)
+    nuevaContrasena: str = Field(min_length=8)
+    confirmarContrasena: str = Field(min_length=8)
+ 
+    def contrasenas_coinciden(self) -> bool:
+        return self.nuevaContrasena == self.confirmarContrasena
