@@ -46,19 +46,11 @@ class loginService:
             .single() \
             .execute()
 
-            esEgresado = rol.data and rol.data["nombreRol"] == "Egresado"
-
-            if esEgresado:
-                authResponse = supabase_admin.auth.admin.create_user({
-                    "email": usuario.correo,
-                    "password": usuario.contrasena,
-                    "email_confirm": True
-                })
-            else:
-                authResponse = supabase.auth.sign_up({
-                    "email": usuario.correo,
-                    "password": usuario.contrasena
-                })
+            authResponse = supabase_admin.auth.admin.create_user({
+                "email": usuario.correo,
+                "password": usuario.contrasena,
+                "email_confirm": True
+            })
 
             if not authResponse.user:
                 return {"error": "No se pudo crear el usuario"}
@@ -76,7 +68,6 @@ class loginService:
             supabase.table("Usuarios").insert(usuarioRegister).execute()
 
             return {
-                "Mensaje": "Usuario registrado correctamente",
                 "id": authResponse.user.id,
                 "email": usuario.correo
             }
