@@ -105,7 +105,7 @@ class EgresadoService:
 
     async def actualizar_egresado(idEgresado: int, egresado: EgresadoUpdateDto):
         try: 
-            datos_actualizar = egresado.model_dump(exclude_unset=True, exclude_none=True)
+            datos_actualizar = egresado.model_dump(mode="json", exclude_unset=True, exclude_none=True)
 
             response = supabase.table("Egresados")\
                 .update(datos_actualizar)\
