@@ -9,7 +9,6 @@ from src.repository.reporte_repository import (
 
 
 def _contar_y_porcentaje(parte: int, total: int) -> dict:
-    """Calculo comun: cantidad + porcentaje redondeado."""
     return {
         "cantidad": parte,
         "porcentaje": round((parte / total) * 100, 2) if total else 0
