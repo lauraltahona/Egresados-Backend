@@ -1,7 +1,5 @@
 from src.config.supabase_client import supabase
 
-# Cache simple en memoria para no golpear la BD en cada peticion del dashboard
-# Se recarga si esta vacio o si se llama a limpiar_cache()
 _cache = {}
 
 def limpiar_cache():
