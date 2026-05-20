@@ -19,6 +19,7 @@ from src.controller.reporte_controller import reporte_router
 from src.controller.excel_egresado_controller import excel_router
 from src.controller.comunidad_controller import comunidad_router
 from src.controller.miembroComunidad_controller import miembro_comunidad_router
+from src.controller.publicacionComunidad_controller import publicacion_comunidad_router
 
 from fastapi import FastAPI
 from src.middleware.cors import setup_cors
@@ -53,3 +54,4 @@ app.include_router(respuesta_encuesta_router)
 app.include_router(excel_router)
 app.include_router(comunidad_router)
 app.include_router(miembro_comunidad_router)
+app.include_router(publicacion_comunidad_router)
