@@ -49,3 +49,17 @@ class ComunidadService:
         
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Error al actualizar la comunidad: {str(e)}")
+        
+
+    async def eliminar_comunidad(idComunidad: int):
+        try:
+            response = supabase.table("Comunidades")\
+                .delete().eq("idComunidad", idComunidad).execute()
+            
+            if response.count == 0:
+                raise HTTPException(status_code=404, detail="Comunidad no encontrada")
+            
+            return {"message": "Comunidad eliminada exitosamente"}
+        
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Error al eliminar la comunidad: {str(e)}")

@@ -49,7 +49,7 @@ class EgresadoService:
             return {"message": "Egresado creado exitosamente", "data": response.data}
         
         except Exception as e:
-            return {"message": "Error al crear el egresado", "error": str(e)}
+            raise HTTPException(status_code=500, detail=f"Error al crear el egresado: {str(e)}")
             
 
     async def get_egresados(
@@ -80,7 +80,7 @@ class EgresadoService:
 
             return {"data": response.data}
         except Exception as e:
-            return {"message": "Error al obtener los egresados", "error": str(e)}
+            raise HTTPException(status_code=500, detail=f"Error al obtener los egresados: {str(e)}")
     
     async def get_egresado_by_id(idEgresado: int):
         try:
@@ -89,7 +89,7 @@ class EgresadoService:
                 raise HTTPException(status_code=404, detail="Egresado no encontrado")
             return response.data[0]
         except Exception as e:
-            return {"message": "Error al obtener el egresado", "error": str(e)}
+            raise HTTPException(status_code=500, detail=f"Error al obtener el egresado: {str(e)}")
 
 
     async def eliminar_egresado(idEgresado: int):
@@ -100,7 +100,7 @@ class EgresadoService:
             
             return {"message": "Egresado eliminado exitosamente"}
         except Exception as e:
-            return {"message": "Error al eliminar el egresado", "error": str(e)}
+            raise HTTPException(status_code=500, detail=f"Error al eliminar el egresado: {str(e)}")
 
 
     async def actualizar_egresado(idEgresado: int, egresado: EgresadoUpdateDto):
