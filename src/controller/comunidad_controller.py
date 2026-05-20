@@ -21,3 +21,7 @@ async def obtener_comunidades(
 @comunidad_router.put("/actualizar-comunidad/{idComunidad}")
 async def actualizar_comunidad(idComunidad: int, comunidad_dto: ComunidadUpdateDto):
     return await ComunidadService.actualizar_comunidad(idComunidad, comunidad_dto)
+
+@comunidad_router.delete("/eliminar-comunidad/{idComunidad}")
+async def eliminar_comunidad(idComunidad: int):
+    return await ComunidadService.eliminar_comunidad(idComunidad)
