@@ -1,8 +1,8 @@
 from src.service.miembroComunidad_service import MiembroComunidadService
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter
 from src.modelDto.miembroComunidad_dto import MiembroComunidadDto
 
-miembro_comunidad_router = APIRouter(prefix="/miembro-comunidad", tags=["Miembro Comunidad"])
+miembro_comunidad_router = APIRouter(tags=["Miembro Comunidad"])
 
 @miembro_comunidad_router.post("/")
 async def crear_miembro_comunidad(miembro_comunidad_dto: MiembroComunidadDto):
