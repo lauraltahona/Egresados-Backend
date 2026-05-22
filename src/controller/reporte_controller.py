@@ -2,7 +2,7 @@ from fastapi import APIRouter
 from src.service.reporte_service import ReporteService
 from src.repository.reporte_repository import limpiar_cache
 
-reporte_router = APIRouter(prefix="/reportes", tags=["Reportes"])
+reporte_router = APIRouter(prefix="/reportes", tags=["Indicadores"])
 
 
 @reporte_router.get("/empleo/{id_programa}")

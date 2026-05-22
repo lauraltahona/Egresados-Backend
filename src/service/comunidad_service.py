@@ -1,3 +1,7 @@
+from datetime import date
+
+from src.modelDto.miembroComunidad_dto import MiembroComunidadDto
+from src.service.miembroComunidad_service import MiembroComunidadService
 from src.modelDto.comunidad_dto import ComunidadDto, ComunidadUpdateDto
 from typing import Optional
 from src.config.supabase_client import supabase
@@ -5,13 +9,28 @@ from fastapi import HTTPException
 
 class ComunidadService:
 
-    async def crear_comunidad(comunidad_dto: ComunidadDto):
+    async def crear_comunidad(comunidad_dto: ComunidadDto, idEgresado: int):
         try:
             response = supabase.table("Comunidades")\
                 .insert(comunidad_dto.model_dump(mode="json")).execute()
             
+            idComunidad = response.data[0]["idComunidad"]  # Obtener el ID de la comunidad recién creada
+
+            # Crear el miembro fundador en la tabla MiembrosComunidad
+            miembro = MiembroComunidadDto(
+                rolMiembro="Administrador",
+                estadoMiembro=True,
+                fechaIngreso=date.today().isoformat(),
+                idComunidad=idComunidad,
+                idEgresado=idEgresado,
+            )
+
+            response_miembro = await MiembroComunidadService.crear_miembro_comunidad(miembro)
+            
             return {"message": "Comunidad creada exitosamente", "data": response.data}
         
+        except HTTPException:
+            raise
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Error al crear la comunidad: {str(e)}")
         
