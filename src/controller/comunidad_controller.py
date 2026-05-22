@@ -5,10 +5,9 @@ from src.modelDto.comunidad_dto import ComunidadDto, ComunidadUpdateDto
 comunidad_router = APIRouter(prefix="/comunidades", tags=["Comunidades"])
 
 
-@comunidad_router.post("/crear-comunidad")
-async def crear_comunidad(comunidad_dto: ComunidadDto):
-    print("Recibido en el controlador:✅", comunidad_dto)
-    return await ComunidadService.crear_comunidad(comunidad_dto)
+@comunidad_router.post("/crear-comunidad/{idEgresado}")
+async def crear_comunidad(comunidad_dto: ComunidadDto, idEgresado: int):
+    return await ComunidadService.crear_comunidad(comunidad_dto, idEgresado)
 
 @comunidad_router.get("/obtener-comunidades")
 async def obtener_comunidades(

@@ -48,6 +48,9 @@ class EgresadoService:
             limpiar_cache()
             return {"message": "Egresado creado exitosamente", "data": response.data}
         
+        except HTTPException:
+            raise
+
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Error al crear el egresado: {str(e)}")
             
@@ -99,6 +102,10 @@ class EgresadoService:
                 raise HTTPException(status_code=404, detail="Egresado no encontrado")
             
             return {"message": "Egresado eliminado exitosamente"}
+        
+        except HTTPException:
+            raise
+        
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Error al eliminar el egresado: {str(e)}")
 
