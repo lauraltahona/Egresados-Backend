@@ -23,7 +23,7 @@ async def get_egresados(
     grupoEtnico: Optional[GrupoEtnico] = None,
     discapacidad: Optional[bool] = None
 ):
-    response = await EgresadoService.get_egresados(idPrograma, sexo, correoEgresado, numeroDocumento, paisResidencia, ciudadResidencia, grupoEtnico, discapacidad)
+    response = await EgresadoService.get_egresados(idPrograma, sexo, correoEgresado, numeroDocumento,paisResidencia, ciudadResidencia, grupoEtnico, discapacidad)
     return response
 
 @egresado_router.get("/egresados/{idEgresado}")
