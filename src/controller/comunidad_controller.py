@@ -9,6 +9,10 @@ comunidad_router = APIRouter(prefix="/comunidades", tags=["Comunidades"])
 async def crear_comunidad(comunidad_dto: ComunidadDto, idEgresado: int):
     return await ComunidadService.crear_comunidad(comunidad_dto, idEgresado)
 
+@comunidad_router.post("/unirse-comunidad/{idComunidad}/{idEgresado}")
+async def unirse_comunidad(idComunidad: int, idEgresado: int):
+    return await ComunidadService.unirse_comunidad(idComunidad, idEgresado)
+
 @comunidad_router.get("/obtener-comunidades")
 async def obtener_comunidades(
     idComunidad: int | None = None,
