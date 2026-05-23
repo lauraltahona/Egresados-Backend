@@ -58,6 +58,8 @@ class EgresadoService:
     async def get_egresados(
     idPrograma: Optional[int] = None,
     sexo: Optional[str] = None,
+    correoEgresado: Optional[str] = None,
+    numeroDocumento: Optional[str] = None,
     paisResidencia: Optional[str] = None,
     ciudadResidencia: Optional[str] = None,
     grupoEtnico: Optional[GrupoEtnico] = None,
@@ -70,6 +72,10 @@ class EgresadoService:
                 query = query.eq("idPrograma", idPrograma)
             if sexo is not None:
                 query = query.eq("sexo", sexo)
+            if correoEgresado is not None:
+                query = query.eq("correoEgresado", correoEgresado)
+            if numeroDocumento is not None:
+                query = query.eq("numeroDocumento", numeroDocumento)
             if paisResidencia is not None:
                 query = query.eq("paisResidencia", paisResidencia)
             if ciudadResidencia is not None:

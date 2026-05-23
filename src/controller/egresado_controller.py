@@ -16,12 +16,14 @@ async def crear_egresado(egresado: EgresadoDto):
 async def get_egresados(
     idPrograma: Optional[int] = None,
     sexo: Optional[str] = None,
+    correoEgresado: Optional[str] = None,
+    numeroDocumento: Optional[str] = None,
     paisResidencia: Optional[str] = None,
     ciudadResidencia: Optional[str] = None,
     grupoEtnico: Optional[GrupoEtnico] = None,
     discapacidad: Optional[bool] = None
 ):
-    response = await EgresadoService.get_egresados(idPrograma, sexo, paisResidencia, ciudadResidencia, grupoEtnico, discapacidad)
+    response = await EgresadoService.get_egresados(idPrograma, sexo, correoEgresado, numeroDocumento, paisResidencia, ciudadResidencia, grupoEtnico, discapacidad)
     return response
 
 @egresado_router.get("/egresados/{idEgresado}")
