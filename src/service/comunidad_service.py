@@ -33,7 +33,39 @@ class ComunidadService:
             raise
         except Exception as e:
             raise HTTPException(status_code=500, detail=f"Error al crear la comunidad: {str(e)}")
+    
+
+    async def unirse_comunidad(idComunidad: int, idEgresado: int):
+        try:
+            # Verificar si la comunidad existe
+            comunidad = supabase.table("Comunidades").select("*").eq("idComunidad", idComunidad).execute()
+            if not comunidad.data:
+                raise HTTPException(status_code=404, detail="Comunidad no encontrada")
+
+            # Verificar si el egresado ya es miembro de la comunidad
+            miembro_existente = supabase.table("MiembrosComunidades").select("*")\
+                .eq("idComunidad", idComunidad).eq("idEgresado", idEgresado).execute()
+            if miembro_existente.data:
+                raise HTTPException(status_code=400, detail="El egresado ya es miembro de la comunidad")
+            
+            # Crear el nuevo miembro con rol "Miembro"
+            nuevo_miembro = MiembroComunidadDto(
+                rolMiembro="Miembro",
+                estadoMiembro=True,
+                fechaIngreso=date.today().isoformat(),
+                idComunidad=idComunidad,
+                idEgresado=idEgresado,
+            )
+
+            response_miembro = await MiembroComunidadService.crear_miembro_comunidad(nuevo_miembro)
+            return response_miembro
         
+        except HTTPException:
+            raise 
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Error al unirse a la comunidad: {str(e)}")
+
+
     async def get_comunidades(self,
         idComunidad: Optional[int] = None,
         nombreComunidad: Optional[str] = None,
