@@ -66,7 +66,8 @@ class EgresadoService:
     discapacidad: Optional[bool] = None):
         try:
             query = supabase.table('Egresados').select("idEgresado, nombreEgresado, " \
-            "apellidosEgresado, sexo, grupoEtnico, paisResidencia, ciudadResidencia, idPrograma")
+            "numeroDocumento, correoEgresado, fechaNacimiento, telefono, fechaGrado,"\
+            "apellidosEgresado, sexo, grupoEtnico, discapacidad, paisResidencia, ciudadResidencia, idPrograma")
 
             if idPrograma is not None:
                 query = query.eq("idPrograma", idPrograma)

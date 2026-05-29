@@ -1,8 +1,9 @@
+from src.service.usuario_crud import UsuarioService
 from src.modelDto.usuario_dto import UsuarioLogin, UsuarioRegister, CambiarContrasenaDto
 from src.service.login_service import loginService
 from fastapi import APIRouter
 
-login_router = APIRouter(tags=["Autenticacion"])
+login_router = APIRouter(tags=["Autenticacion y Usuario"])
 
 @login_router.post("/login")
 async def login_endpoint(usuario: UsuarioLogin):
@@ -11,6 +12,12 @@ async def login_endpoint(usuario: UsuarioLogin):
 @login_router.post("/register")
 async def login_endpoint(usuario: UsuarioRegister):
     return await loginService.register(usuario)
+
+
+@login_router.get("/usuarios")
+async def leer_usuarios_endpoint():
+    return UsuarioService.leer_usuarios()
+
 
 @login_router.patch("/cambiar-contrasena")
 async def cambiar_contrasena_endpoint(usuario: CambiarContrasenaDto):
