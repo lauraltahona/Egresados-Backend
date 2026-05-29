@@ -8,10 +8,10 @@ class EventoDto(BaseModel):
     tipoEvento: Enum.TipoEvento
     horaEvento: time
     fechaEvento: date
-    descripcionEvento: str = Field(min_length=10, max_length=500, pattern=r"^[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+$")
-    lugarEvento: str = Field(min_length=3, max_length=150, pattern=r"^[0-9A-Za-zñÑáéíóúÁÉÍÓÚ\s]+$")
+    descripcionEvento: str = Field(min_length=10, max_length=500, pattern=r"^[0-9A-Za-zñÑáéíóúÁÉÍÓÚ%.,:;()+\-\s]+$")
+    lugarEvento: str = Field(min_length=3, max_length=150, pattern=r"^[0-9A-Za-zñÑáéíóúÁÉÍÓÚ%.,:;()+\-\s]+$")
     modalidadEvento: Enum.ModalidadEvento
-    organizadorEvento: str = Field(min_length=3, max_length=150, pattern=r"^[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+$")
+    organizadorEvento: str = Field(min_length=3, max_length=150, pattern=r"^[0-9A-Za-zñÑáéíóúÁÉÍÓÚ%.,:;()+\-\s]+$")
     urlTransmision: Optional[HttpUrl] = None
     
     @model_validator(mode="after")
