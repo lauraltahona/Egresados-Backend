@@ -67,3 +67,10 @@ class EgresadoUpdateDto(BaseModel):
     experiencia: Optional[int] = Field(default=None,ge=0,le=70)
     sexoOtro: Optional[str] = None
     segundaLenguaOtro: Optional[str] = None
+    
+class EgresadoImportDto(BaseModel):
+    nombre: str = Field(pattern=r"^[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+$", min_length=1, max_length=100)
+    apellidos: str = Field(pattern=r"^[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+$", min_length=1, max_length=100)
+    numeroDocumento: str = Field(min_length=8, max_length=10)
+    programaCursado: str = Field(min_length=3, max_length=150)
+    fechaGrado: date
