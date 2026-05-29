@@ -35,10 +35,9 @@ setup_cors(app)
 def health():
     return {"message": 'API is up!'}
 
-app.include_router(usuario_router)
+app.include_router(login_router)
 app.include_router(rol_router)
 app.include_router(egresado_router)
-app.include_router(login_router)
 app.include_router(facultad_router)
 app.include_router(programa_router)
 app.include_router(proyecto_router)

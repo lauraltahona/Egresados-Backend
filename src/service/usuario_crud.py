@@ -5,13 +5,6 @@ class UsuarioService:
     def __init__(self):
         pass
 
-    async def crear_usuario(usuario: dict):
-        try:
-            response = supabase.table("Usuarios").insert(usuario).execute()
-            return response.data
-        except Exception as e:
-            return {"error": str(e)}
-        
     def leer_usuarios():
         try:
             response = supabase.table("Usuarios")\
@@ -22,7 +15,7 @@ class UsuarioService:
                 "correo",
                 "celular", 
                 "idRol", 
-                "fechaRegistoUsuario",
+                "fechaRegistroUsuario",
                 "Roles!inner(nombreRol)"
             )\
             .not_.eq("Roles.nombreRol", "Egresado")\

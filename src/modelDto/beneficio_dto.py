@@ -6,7 +6,7 @@ class BeneficioDto(BaseModel):
     nombreBeneficio: str = Field(min_length=3, max_length=150, pattern=r"^[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+$")
     tipoBeneficio: Enum.TipoBeneficio
     tipoBeneficioOtro: str | None = Field(default=None,min_length=3,max_length=100,pattern=r"^[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+$")
-    descripcionBeneficio: str | None = Field(None, min_length=10, max_length=500,pattern=r"^[0-9A-Za-zñÑáéíóúÁÉÍÓÚ\s]+$")
+    descripcionBeneficio: str | None = Field(None, min_length=10, max_length=500,pattern=r"^[0-9A-Za-zñÑáéíóúÁÉÍÓÚ\s.,;:%()\-]+$")
     objetoBeneficio: str | None = Field(None, min_length=10, max_length=300, pattern=r"^[0-9A-Za-zñÑáéíóúÁÉÍÓÚ\s%]+$")
     empresaConvenio: str | None = Field(None, min_length=3, max_length=150, pattern=r"^[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+$")
     contactoEmpresa: str | None = Field(None, min_length=3,max_length=150,pattern=r"^[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+$")
