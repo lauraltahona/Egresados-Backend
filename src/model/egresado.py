@@ -8,9 +8,11 @@ class Egresado(BaseModel):
     nombre: str = Field(pattern=r"^[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+$", min_length=3, max_length=100) 
     apellidos: str = Field(pattern=r"^[A-Za-zñÑáéíóúÁÉÍÓÚ\s]+$", min_length=3, max_length=100),
     tipoDocumento: Enum.TipoDocumento
-    cedula: str = Field(min_length=8, max_length=10)
+    numeroDocumento: str = Field(min_length=8, max_length=10)
     fechaNacimiento: date
-    correo: EmailStr
+    correoEgresado: EmailStr | None = None
+    esGraduado: bool
+    fechaGrado: date | None = None
     celular: str = Field(max_length=10)
     sexo: Enum.Sexo
     grupoEtnico: Enum.GrupoEtnico
