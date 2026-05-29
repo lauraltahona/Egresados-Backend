@@ -8,4 +8,4 @@ class Usuario(BaseModel):
     idRol: int
     correo: EmailStr = Field(min_length=6, max_length=150)
     celular: str = Field(min_length=10, max_length=10, pattern=r"^\d{10}$")
-    fechaRegistoUsuario: date = Field(default_factory=date.today)
+    fechaRegistroUsuario: date = Field(default_factory=date.today)
