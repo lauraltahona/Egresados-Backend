@@ -12,7 +12,7 @@ class UsuarioRegister(BaseModel):
     correo: EmailStr = Field(min_length=6, max_length=50)
     contrasena: str = Field(min_length=8)
     celular: str = Field(min_length=10, max_length=10, pattern=r"^\d{10}$")
-    fechaRegistoUsuario: date = Field(default_factory=date.today)
+    fechaRegistroUsuario: date = Field(default_factory=date.today)
     
 class CambiarContrasenaDto(BaseModel):
     usuarioId: str = Field(min_length=1)
