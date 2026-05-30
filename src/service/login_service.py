@@ -62,7 +62,7 @@ class loginService:
                 "correo": usuario.correo,
                 "celular": usuario.celular,
                 "idRol": usuario.idRol,
-                "fechaRegistoUsuario": datetime.datetime.now().isoformat()
+                "fechaRegistroUsuario": datetime.datetime.now().isoformat()
             }
 
             supabase.table("Usuarios").insert(usuarioRegister).execute()
