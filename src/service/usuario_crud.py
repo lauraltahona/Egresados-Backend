@@ -7,7 +7,7 @@ class UsuarioService:
     def __init__(self):
         pass
 
-    def leer_usuarios(idUsuario: Optional[str] = None, nombreUsuario: Optional[str] = None, correo: Optional[str] = None):
+    async def leer_usuarios(idUsuario: Optional[str] = None, nombreUsuario: Optional[str] = None, correo: Optional[str] = None):
         try:
             query = supabase.table("Usuarios")\
             .select(
