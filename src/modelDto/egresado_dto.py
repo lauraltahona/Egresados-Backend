@@ -9,7 +9,6 @@ class EgresadoDto(BaseModel):
     tipoDocumento: Enum.TipoDocumento | None = None
     numeroDocumento: str | None = Field(None, min_length=6, max_length=16) 
     fechaNacimiento: date | None = None
-    fechaGraduacion: date | None = None
     correoEgresado: EmailStr | None = None
     telefono: str = Field(max_length=10) 
     sexo: Enum.Sexo | None = None
@@ -31,6 +30,9 @@ class EgresadoDto(BaseModel):
     
     sexoOtro: Optional[str] | None = None
     segundaLenguaOtro: Optional[str] | None= None
+    esGraduado: Optional[bool] | None = None
+    fechaGrado: Optional[date] | None = None
+
 
 
 class EgresadoUpdateDto(BaseModel):
