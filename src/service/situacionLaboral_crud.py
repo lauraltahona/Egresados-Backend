@@ -40,7 +40,7 @@ class SituacionLaboralService:
                         nombreEgresado,
                         apellidosEgresado
                     )
-                """)
+                """)    
                 .eq("idEgresado", idEgresado)
                 .execute()
             )

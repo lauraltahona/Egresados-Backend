@@ -1,6 +1,6 @@
 from typing import Optional
 from datetime import date
-from pydantic import BaseModel, EmailStr, Field
+from pydantic import BaseModel, EmailStr, Field, field_validator
 import src.enum.egresado_enum as Enum
 
 class EgresadoDto(BaseModel):
@@ -33,11 +33,24 @@ class EgresadoDto(BaseModel):
     esGraduado: Optional[bool] | None = None
     fechaGrado: Optional[date] | None = None
 
+    @field_validator("correoEgresado")
+    @classmethod
+    def validar_correo(cls, value):
+        if value and not value.endswith("@unicesar.edu.co"):
+            raise ValueError("El correo debe ser del dominio @unicesar.edu.co")
+        return value
+    
+    @field_validator("fechaNacimiento")
+    @classmethod
+    def validar_fecha_nacimiento(cls, value):
+        if value and value > date.today():
+            raise ValueError("La fecha de nacimiento no puede ser en el futuro")
+        return value
+    
 
 
 class EgresadoUpdateDto(BaseModel):
 
-    correoEgresado: Optional[EmailStr] = None
     telefono: Optional[str] = Field(default=None,max_length=10)
     sexo: Optional[Enum.Sexo] = None
     grupoEtnico: Optional[Enum.GrupoEtnico] = None
