@@ -20,10 +20,23 @@ class loginService:
             .single()\
             .execute()
 
+            datos_usuario = usuarioLogin.data
+
+            # Si el usuario es egresado, buscar su idEgresado
+            nombre_rol = datos_usuario.get("Roles", {}).get("nombreRol", "")
+            if nombre_rol == "Egresado":
+                egresado = supabase.table("Egresados")\
+                    .select("idEgresado")\
+                    .eq("correoEgresado", usuario.correo)\
+                    .single()\
+                    .execute()
+                
+                datos_usuario["idEgresado"] = egresado.data["idEgresado"] if egresado.data else None
+
             return {
                 "token": response.session.access_token,
                 "refresh_token": response.session.refresh_token,
-                "usuario": usuarioLogin.data
+                "usuario": datos_usuario
             }
             
         except Exception as e:
