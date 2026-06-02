@@ -13,7 +13,10 @@ async def crear_situacion_laboral(situacion: SituacionLaboralDto):
 async def obtener_situacion_laboral_por_egresado(idEgresado: int):
     return await SituacionLaboralService.obtener_situacion_laboral_por_egresado(idEgresado)
     
-    
+@situacion_router.get("/situacion-laboral")
+async def get_situacion_laboral():
+    return await SituacionLaboralService.get_situacion_laboral()
+
 @situacion_router.put("/situacion-laboral/actualizar/{idSituacion}")
 async def actualizar_situacion_laboral(idSituacion: int, situacion: SituacionLaboralDto):
     return await SituacionLaboralService.actualizar_situacion_laboral(idSituacion, situacion)

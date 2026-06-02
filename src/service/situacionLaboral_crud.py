@@ -23,22 +23,62 @@ class SituacionLaboralService:
             limpiar_cache()
             
             return {"message": "Situación laboral creada exitosamente"}
-            
+        
+        except HTTPException as e:
+            raise e
         except Exception as e:
-            return {"error": str(e)}
+            raise HTTPException(status_code=500, detail=f"Error al crear la situacion laboral:{str(e)}")
         
 
     async def obtener_situacion_laboral_por_egresado(idEgresado: int):
         try:
-            response = supabase.table("situacionLaboral")\
-                .select("*")\
-                .eq("idEgresado", idEgresado).execute()
+            response = (
+                supabase.table("situacionLaboral")
+                .select("""
+                    *,
+                    Egresados(
+                        nombreEgresado,
+                        apellidosEgresado
+                    )
+                """)
+                .eq("idEgresado", idEgresado)
+                .execute()
+            )
+
             if not response.data:
                 return {"error": "No se encontró la situación laboral para el egresado especificado"}
+
             return {"data": response.data[0]}
-        
+
+        except HTTPException as e:
+            raise e
         except Exception as e:
-            return {"error": str(e)}
+            raise HTTPException(status_code=500, detail=f"Error al obtener la situacion laboral:{str(e)}")
+        
+
+    async def get_situacion_laboral():
+        try:
+            response = (
+                supabase.table("situacionLaboral")
+                .select("""
+                    *,
+                    Egresados(
+                        nombreEgresado,
+                        apellidosEgresado
+                    )
+                """)
+                .execute()
+           )
+
+            return {"data": response.data}
+
+        except HTTPException as e:
+            raise e
+        except Exception as e:
+            raise HTTPException(status_code=500, detail=f"Error al obtener las situaciones laborales: {str(e)}")
+
+
+
 
     async def actualizar_situacion_laboral(idSituacion: int, situacion: dict):
         try:
