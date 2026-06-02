@@ -1,5 +1,5 @@
 import io
-
+from datetime import date
 import pandas as pd
 from fastapi import HTTPException, UploadFile
 from fastapi.responses import StreamingResponse
@@ -8,6 +8,7 @@ from src.config.supabase_client import supabase
 from src.modelDto.egresado_dto import EgresadoDto
 from src.service.egresado_crud import EgresadoService
 from src.service.excel_service.excel_service import exportar_excel
+from src.service.egresado_crud import _generar_contrasena
 
 class ExcelEgresadoService:
 
@@ -107,6 +108,31 @@ class ExcelEgresadoService:
 
                     response = supabase.table("Egresados").insert(datos_egresado).execute()
                     if response.data:
+                        
+                        try:
+                            rolEgresado = supabase.table("Roles")\
+                                .select("idRol")\
+                                .eq("nombreRol", "Egresado")\
+                                .single()\
+                                .execute()
+
+                            if rolEgresado.data:
+                                from src.modelDto.usuario_dto import UsuarioRegister
+                                from src.service.login_service import loginService
+
+                                usuarioRegister = UsuarioRegister(
+                                    nombreUsuario=nombre,
+                                    apellidoUsuario=apellidos,
+                                    idRol=rolEgresado.data["idRol"],
+                                    correo=f"{identificacion}@unicesar.edu.co",
+                                    contrasena=_generar_contrasena(identificacion, nombre),
+                                    celular="0000000000",
+                                    fechaRegistroUsuario=date.today().isoformat()
+                                )
+                                await loginService.register(usuarioRegister)
+                        except Exception as e:
+                            fallidos.append({"fila": numero_fila, "motivo": f"Egresado insertado pero usuario no creado: {str(e)}"})
+                        
                         exitosos.append({
                             "fila": numero_fila,
                             "identificacion": identificacion,

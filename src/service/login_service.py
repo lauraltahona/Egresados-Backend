@@ -22,7 +22,6 @@ class loginService:
 
             datos_usuario = usuarioLogin.data
 
-            # Si el usuario es egresado, buscar su idEgresado
             nombre_rol = datos_usuario.get("Roles", {}).get("nombreRol", "")
             if nombre_rol == "Egresado":
                 egresado = supabase.table("Egresados")\
@@ -30,7 +29,6 @@ class loginService:
                     .eq("correoEgresado", usuario.correo)\
                     .single()\
                     .execute()
-                
                 datos_usuario["idEgresado"] = egresado.data["idEgresado"] if egresado.data else None
 
             return {
