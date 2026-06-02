@@ -10,8 +10,11 @@ from src.service.login_service import loginService
 from src.config.supabase_client import supabase
 from src.repository.reporte_repository import limpiar_cache
 
-class EgresadoService:
+def _generar_contrasena(numero_documento: str, nombre: str) -> str:
+        primeras_letras = nombre[:3].capitalize()
+        return f"{numero_documento}{primeras_letras}*"
 
+class EgresadoService:
 
     async def crear_egresado(egresado: EgresadoDto):
         try:
@@ -38,7 +41,7 @@ class EgresadoService:
                 apellidoUsuario=egresado.apellidosEgresado,
                 idRol=rolEgresado.data["idRol"],
                 correo=egresado.correoEgresado,
-                contrasena=egresado.numeroDocumento,
+                contrasena=_generar_contrasena(egresado.numeroDocumento, egresado.nombreEgresado),
                 celular=egresado.telefono,
                 fechaRegistoUsuario=date.today().isoformat()
             )
