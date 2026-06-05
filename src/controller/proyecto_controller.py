@@ -17,3 +17,7 @@ async def obtener_proyectos_endpoint():
 @proyecto_router.get("/proyectos/{titulo}")
 async def obtener_proyecto_por_titulo_endpoint(titulo: str):
     return await ProyectoService.obtener_proyecto_por_titulo(titulo)
+
+@proyecto_router.patch("/proyectos/{idProyecto}/estado")
+async def cambiar_estado_proyecto_endpoint(idProyecto: int, nuevo_estado: str):
+    return await ProyectoService.cambiar_estado_proyecto(idProyecto, nuevo_estado)
