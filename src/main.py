@@ -21,6 +21,7 @@ from src.controller.comunidad_controller import comunidad_router
 from src.controller.miembroComunidad_controller import miembro_comunidad_router
 from src.controller.publicacionComunidad_controller import publicacion_comunidad_router
 from src.controller.comentario_controller import comentario_router
+from src.controller.aplicacionOferta_controller import aplicacion_router
 
 from fastapi import FastAPI
 from src.middleware.cors import setup_cors
@@ -45,6 +46,7 @@ app.include_router(file_router)
 app.include_router(situacion_router)
 app.include_router(beneficio_router)
 app.include_router(oferta_router)
+app.include_router(aplicacion_router)
 app.include_router(evento_router)
 app.include_router(inscripcion_router)
 app.include_router(reporte_router)
