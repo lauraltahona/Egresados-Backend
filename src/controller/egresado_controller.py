@@ -1,3 +1,4 @@
+from datetime import date
 from typing import Optional
 
 from src.enum.egresado_enum import GrupoEtnico
@@ -21,9 +22,11 @@ async def get_egresados(
     paisResidencia: Optional[str] = None,
     ciudadResidencia: Optional[str] = None,
     grupoEtnico: Optional[GrupoEtnico] = None,
-    discapacidad: Optional[bool] = None
+    discapacidad: Optional[bool] = None,
+    fechaGrado: Optional[date] = None
 ):
-    response = await EgresadoService.get_egresados(idPrograma, sexo, correoEgresado, numeroDocumento,paisResidencia, ciudadResidencia, grupoEtnico, discapacidad)
+    response = await EgresadoService.get_egresados(idPrograma, sexo, correoEgresado, numeroDocumento,paisResidencia, 
+                ciudadResidencia, grupoEtnico, discapacidad, fechaGrado)
     return response
 
 @egresado_router.get("/egresados/{idEgresado}")

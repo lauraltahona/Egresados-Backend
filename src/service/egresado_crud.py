@@ -66,6 +66,7 @@ class EgresadoService:
     paisResidencia: Optional[str] = None,
     ciudadResidencia: Optional[str] = None,
     grupoEtnico: Optional[GrupoEtnico] = None,
+    fechaGrado: Optional[date] = None,
     discapacidad: Optional[bool] = None):
         try:
             query = supabase.table('Egresados').select("idEgresado, nombreEgresado, " \
@@ -88,7 +89,9 @@ class EgresadoService:
                 query = query.eq("grupoEtnico", grupoEtnico.value)
             if discapacidad is not None:
                 query = query.eq("discapacidad", discapacidad)
-
+            if fechaGrado is not None:
+                query = query.eq("fechaGrado", fechaGrado.isoformat())
+            
             response = query.execute()
 
             return {"data": response.data}
